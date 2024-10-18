@@ -13,6 +13,10 @@
             <label for="apellido" class="form-label">Apellido</label>
             <input type="text" class="form-control" name="apellido" required>
         </div>
+        <div class="mb-3">
+            <label for="telefono" class="form-label">Teléfono</label>
+            <input type="text" class="form-control" name="telefono" placeholder="Ingrese el teléfono" value="{{ old('telefono') }}">
+        </div>
         <button type="submit" class="btn btn-success">Guardar</button>
     </form>
 </div>
