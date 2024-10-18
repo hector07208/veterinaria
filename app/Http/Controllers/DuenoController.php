@@ -2,63 +2,36 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dueno;
 use Illuminate\Http\Request;
 
 class DuenoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+    public function index() {
+        $duenos = Dueno::all();
+        return view('duenos.index', compact('duenos'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+    public function create() {
+        return view('duenos.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request) {
+        Dueno::create($request->all());
+        return redirect()->route('duenos.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+    public function edit(Dueno $dueno) {
+        return view('duenos.edit', compact('dueno'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+    public function update(Request $request, Dueno $dueno) {
+        $dueno->update($request->all());
+        return redirect()->route('duenos.index');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+    public function destroy(Dueno $dueno) {
+        $dueno->delete();
+        return redirect()->route('duenos.index');
     }
 }

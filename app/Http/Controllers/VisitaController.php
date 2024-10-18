@@ -2,63 +2,39 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Visita;
+use App\Models\Mascota;
 use Illuminate\Http\Request;
 
 class VisitaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+    public function index() {
+        $visitas = Visita::with('mascota')->get();
+        return view('visitas.index', compact('visitas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+    public function create() {
+        $mascotas = Mascota::all();
+        return view('visitas.create', compact('mascotas'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request) {
+        Visita::create($request->all());
+        return redirect()->route('visitas.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+    public function edit(Visita $visita) {
+        $mascotas = Mascota::all();
+        return view('visitas.edit', compact('visita', 'mascotas'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+    public function update(Request $request, Visita $visita) {
+        $visita->update($request->all());
+        return redirect()->route('visitas.index');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+    public function destroy(Visita $visita) {
+        $visita->delete();
+        return redirect()->route('visitas.index');
     }
 }

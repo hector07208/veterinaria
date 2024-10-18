@@ -2,63 +2,39 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Mascota;
+use App\Models\Dueno;
 use Illuminate\Http\Request;
 
 class MascotaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+    public function index() {
+        $mascotas = Mascota::all();
+        return view('mascotas.index', compact('mascotas'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+    public function create() {
+        $duenos = Dueno::all();
+        return view('mascotas.create', compact('duenos'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+    public function store(Request $request) {
+        Mascota::create($request->all());
+        return redirect()->route('mascotas.index');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+    public function edit(Mascota $mascota) {
+        $duenos = Dueno::all();
+        return view('mascotas.edit', compact('mascota', 'duenos'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+    public function update(Request $request, Mascota $mascota) {
+        $mascota->update($request->all());
+        return redirect()->route('mascotas.index');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+    public function destroy(Mascota $mascota) {
+        $mascota->delete();
+        return redirect()->route('mascotas.index');
     }
 }
